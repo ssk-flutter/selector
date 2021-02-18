@@ -1,14 +1,19 @@
+import 'dart:io';
 
-import 'dart:async';
+T selector<T>({
+  T android,
+  T ios,
+  T mac,
+  T fuchsia,
+  T linux,
+  T windows,
+}) {
+  if (Platform.isAndroid) return android;
+  if (Platform.isIOS) return ios;
+  if (Platform.isFuchsia) return fuchsia;
+  if (Platform.isLinux) return linux;
+  if (Platform.isMacOS) return mac;
+  if (Platform.isWindows) return windows;
 
-import 'package:flutter/services.dart';
-
-class Selector {
-  static const MethodChannel _channel =
-      const MethodChannel('selector');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+  throw 'Unidentified platform ${Platform.operatingSystem}';
 }
