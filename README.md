@@ -2,25 +2,39 @@
 
 Platform Selector
 
-## Getting Started
+## Basic selector
+- with `if`
+```dart
+String result = '';
+if (Platform.isAndroid) result = 'android';
+if (Platform.isIOS) result = 'ios';
+if (Platform.isFuchsia) result = 'fuchsia';
+if (Platform.isLinux) result = 'linux';
+if (Platform.isMacOS) result = 'mac';
+if (Platform.isWindows) result = 'windows';
+```
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+- with `selector`
+```dart
+String result = selector(
+      android: 'hello Android',
+      ios: 'hello iOS',
+      fuchsia: 'hello Fuchsia',
+      linux: 'hello Linux',
+      mac: 'hello MacOS',
+      windows: 'hello Windows',
+);
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## OrElse selector
+- with `if`
+```dart
+String admobKey;
+if (Platform.isAndroid) admobKey = 'android-key';
+else admobKey = 'iOS-key';
+```
 
-androidOrElse
-iosOrElse
-windowsOrElse
-macOrElse
-linuxOrElse
-fuchsiaOrElse
-
-androidOrIos
-iosOrAndroid
-
-
+- with `selector`
+```dart
+String admobKey = androidOrElse('android-key', 'iOS-key');
+```
