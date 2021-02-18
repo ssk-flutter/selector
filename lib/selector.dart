@@ -34,11 +34,9 @@ T deviceSelector<T>({
   T desktop,
   T web,
 }) {
-  if (kIsWeb)
-    return web;
+  if (kIsWeb) return web;
 
-  if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia)
-    return mobile;
+  if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) return mobile;
 
   if (Platform.isWindows || Platform.isMacOS || Platform.isLinux)
     return desktop;
@@ -77,8 +75,7 @@ T windowsOrElse<T>(T windows, T elsePlatform) {
 }
 
 T mobileOrElse<T>(T mobile, T elsePlatform) {
-  if (isMobile)
-    return mobile;
+  if (isMobile) return mobile;
 
   return elsePlatform;
 }
@@ -86,17 +83,16 @@ T mobileOrElse<T>(T mobile, T elsePlatform) {
 bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
 
 T desktopOrElse<T>(T desktop, T elsePlatform) {
-  if (isDesktop)
-    return desktop;
+  if (isDesktop) return desktop;
 
   return elsePlatform;
 }
 
-bool get isDesktop => Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+bool get isDesktop =>
+    Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 T webOrElse<T>(T web, T elsePlatform) {
-  if (kIsWeb)
-    return web;
+  if (kIsWeb) return web;
 
   return elsePlatform;
 }

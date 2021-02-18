@@ -58,3 +58,9 @@ else admobKey = 'iOS-key';
 ```dart
 String admobKey = androidOrElse('android-key', 'iOS-key');
 ```
+
+## Query
+```dart
+print('isDesktop: $isDesktop')
+print('isMobile: $isMobile')
+```
