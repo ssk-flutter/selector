@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
               child: Text('selector'),
               onPressed: () => _showSnackBar(context, _selector())),
           FlatButton(
+              child: Text('deviceSelector'),
+              onPressed: () => _showSnackBar(context, _deviceSelector())),
+          FlatButton(
               child: Text('parameter as function'),
               onPressed: () =>
                   _showSnackBar(context, _functionParameter().toString())),
@@ -46,6 +49,11 @@ class MyApp extends StatelessWidget {
       linux: 'hello Linux',
       mac: 'hello MacOS',
       windows: 'hello Windows');
+
+  _deviceSelector() => deviceSelector(
+      mobile: 'hello Mobile',
+      desktop: 'hello Desktop',
+      web: 'hello Web');
 
   _functionParameter() => selector(
         android: (a, b) => a + b,
