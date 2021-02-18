@@ -26,6 +26,26 @@ String result = selector(
 );
 ```
 
+## Device selector
+- with `if`
+```dart
+String result = '';
+if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia)
+  result = 'hello Mobile';
+if (Platform.isLinux || Platform.isMacOS || Platform.isWindows)
+  result = 'hello Desktop';
+if (kIsWeb) result = 'hello Web';
+```
+
+- with `deviceSelector`
+```dart
+String result = deviceSelector(
+      mobile: 'hello Mobile',
+      desktop: 'hello Desktop',
+      web: 'hello Web'
+);
+```
+
 ## OrElse selector
 - with `if`
 ```dart
