@@ -36,10 +36,9 @@ T deviceSelector<T>({
 }) {
   if (kIsWeb) return web;
 
-  if (Platform.isAndroid || Platform.isIOS || Platform.isFuchsia) return mobile;
+  if (isMobile) return mobile;
 
-  if (Platform.isWindows || Platform.isMacOS || Platform.isLinux)
-    return desktop;
+  if (isDesktop) return desktop;
 
   throw 'Unidentified device ${Platform.operatingSystem}';
 }
