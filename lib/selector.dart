@@ -77,18 +77,22 @@ T windowsOrElse<T>(T windows, T elsePlatform) {
 }
 
 T mobileOrElse<T>(T mobile, T elsePlatform) {
-  if (Platform.isAndroid || Platform.isFuchsia || Platform.isIOS)
+  if (isMobile)
     return mobile;
 
   return elsePlatform;
 }
 
+bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
+
 T desktopOrElse<T>(T desktop, T elsePlatform) {
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS)
+  if (isDesktop)
     return desktop;
 
   return elsePlatform;
 }
+
+bool get isDesktop => Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 T webOrElse<T>(T web, T elsePlatform) {
   if (kIsWeb)
