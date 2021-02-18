@@ -6,12 +6,12 @@ Platform Selector
 - with `if`
 ```dart
 String result = '';
-if (Platform.isAndroid) result = 'android';
-if (Platform.isIOS) result = 'ios';
-if (Platform.isFuchsia) result = 'fuchsia';
-if (Platform.isLinux) result = 'linux';
-if (Platform.isMacOS) result = 'mac';
-if (Platform.isWindows) result = 'windows';
+if (Platform.isAndroid) result = 'hello Android';
+if (Platform.isIOS) result = 'hello iOS';
+if (Platform.isFuchsia) result = 'hello  Fuchsia';
+if (Platform.isLinux) result = 'hello  Linux';
+if (Platform.isMacOS) result = 'hello MacOS';
+if (Platform.isWindows) result = 'hello  Windows';
 ```
 
 - with `selector`
