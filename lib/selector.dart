@@ -2,6 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
+/// isMobile device
+bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
+
+/// isDesktop device
+bool get isDesktop =>
+    Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+
+/// selector for known platforms
 T selector<T>({
   T android,
   T ios,
@@ -43,11 +51,13 @@ T deviceSelector<T>({
   throw 'Unidentified device ${Platform.operatingSystem}';
 }
 
+/// androidOrElse(a,b) run a on android or run b
 T androidOrElse<T>(T android, T elsePlatform) {
   if (Platform.isAndroid) return android;
   return elsePlatform;
 }
 
+/// iosOrElse(a,b) run a on iOS or run b
 T iosOrElse<T>(T ios, T elsePlatform) {
   if (Platform.isIOS) return ios;
   return elsePlatform;
@@ -79,16 +89,11 @@ T mobileOrElse<T>(T mobile, T elsePlatform) {
   return elsePlatform;
 }
 
-bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
-
 T desktopOrElse<T>(T desktop, T elsePlatform) {
   if (isDesktop) return desktop;
 
   return elsePlatform;
 }
-
-bool get isDesktop =>
-    Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 T webOrElse<T>(T web, T elsePlatform) {
   if (kIsWeb) return web;
