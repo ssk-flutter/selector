@@ -43,17 +43,19 @@ class MyApp extends StatelessWidget {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
 
   _selector() => selector(
-      android: 'hello Android',
-      ios: 'hello iOS',
-      fuchsia: 'hello Fuchsia',
-      linux: 'hello Linux',
-      mac: 'hello MacOS',
-      windows: 'hello Windows');
+        android: 'hello Android',
+        ios: 'hello iOS',
+        fuchsia: 'hello Fuchsia',
+        linux: 'hello Linux',
+        mac: 'hello MacOS',
+        windows: 'hello Windows',
+      );
 
   _deviceSelector() => deviceSelector(
-      mobile: 'hello Mobile',
-      desktop: 'hello Desktop',
-      web: 'hello Web');
+        mobile: 'hello Mobile',
+        desktop: 'hello Desktop',
+        web: 'hello Web',
+      );
 
   _functionParameter() => selector(
         android: (a, b) => a + b,
