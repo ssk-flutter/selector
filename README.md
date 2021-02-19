@@ -42,7 +42,7 @@ if (kIsWeb) result = 'hello Web';
 String result = deviceSelector(
       mobile: 'hello Mobile',
       desktop: 'hello Desktop',
-      web: 'hello Web'
+      web: 'hello Web',
 );
 ```
 

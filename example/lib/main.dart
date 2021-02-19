@@ -51,9 +51,10 @@ class MyApp extends StatelessWidget {
       windows: 'hello Windows');
 
   _deviceSelector() => deviceSelector(
-      mobile: 'hello Mobile',
-      desktop: 'hello Desktop',
-      web: 'hello Web');
+        mobile: 'hello Mobile',
+        desktop: 'hello Desktop',
+        web: 'hello Web',
+      );
 
   _functionParameter() => selector(
         android: (a, b) => a + b,
