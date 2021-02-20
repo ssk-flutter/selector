@@ -1,6 +1,11 @@
-# selector
+- [Selector](#selector)
+  - [Basic selector](#basic-selector)
+  - [Device selector](#device-selector)
+  - [OrElse selector](#orelse-selector)
+  - [Query](#query)
+# Selector
 
-Platform Selector
+Multi type support Platform Selector
 
 ## Basic selector
 - with `if`
