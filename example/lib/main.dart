@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
   _showSnackBar(BuildContext context, String message) =>
       Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
 
-  _selector() => selector(
+  _selector() => selector<String>(
         android: 'hello Android',
         ios: 'hello iOS',
         fuchsia: 'hello Fuchsia',
@@ -51,13 +51,13 @@ class MyApp extends StatelessWidget {
         windows: 'hello Windows',
       );
 
-  _deviceSelector() => deviceSelector(
+  _deviceSelector() => deviceSelector<String>(
         mobile: 'hello Mobile',
         desktop: 'hello Desktop',
         web: 'hello Web',
       );
 
-  _functionParameter() => selector(
+  _functionParameter() => selector<Function(num, num)>(
         android: (a, b) => a + b,
         ios: (a, b) => a * b,
         windows: (a, b) => a / b,
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         fuchsia: (a, b) => a - b,
       )(1, 2);
 
-  _androidOrElse() => androidOrElse('android-admob-id', 'ios-admob-id');
+  _androidOrElse() => androidOrElse<String>('android-admob-id', 'ios-admob-id');
 
-  _iosOrElse() => iosOrElse('ios-admob-id', 'android-admob-id');
+  _iosOrElse() => iosOrElse<String>('ios-admob-id', 'android-admob-id');
 }
