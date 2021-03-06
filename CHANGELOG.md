@@ -1,3 +1,6 @@
+## 0.2.7
+* support null-safety
+
 ## 0.2.0
 
 * introduce deviceSelector

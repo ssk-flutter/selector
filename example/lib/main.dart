@@ -43,14 +43,16 @@ class MyApp extends StatelessWidget {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(message)));
 
-  _selector() => selector<String>(
+  String _selector() =>
+      selector<String>(
         android: 'hello Android',
         ios: 'hello iOS',
         fuchsia: 'hello Fuchsia',
         linux: 'hello Linux',
         mac: 'hello MacOS',
         windows: 'hello Windows',
-      );
+      ) ??
+      'null';
 
   _deviceSelector() => deviceSelector<String>(
         mobile: 'hello Mobile',
@@ -58,14 +60,15 @@ class MyApp extends StatelessWidget {
         web: 'hello Web',
       );
 
-  _functionParameter() => selector<Function(num, num)>(
+  _functionParameter() => (selector<Function(num, num)>(
         android: (a, b) => a + b,
         ios: (a, b) => a * b,
         windows: (a, b) => a / b,
         linux: (a, b) => pow(a, b),
         mac: (a, b) => sqrt(a) * b,
         fuchsia: (a, b) => a - b,
-      )(1, 2);
+      ) ??
+      (a, b) => 'Not gonna happen')(1, 2);
 
   _androidOrElse() => androidOrElse<String>('android-admob-id', 'ios-admob-id');
 

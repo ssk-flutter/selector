@@ -10,13 +10,13 @@ bool get isDesktop =>
     Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 /// selector for known platforms
-T selector<T>({
-  T android,
-  T ios,
-  T mac,
-  T fuchsia,
-  T linux,
-  T windows,
+T? selector<T>({
+  T? android,
+  T? ios,
+  T? mac,
+  T? fuchsia,
+  T? linux,
+  T? windows,
 }) {
   if (Platform.isAndroid) return android;
   if (Platform.isIOS) return ios;
@@ -37,10 +37,10 @@ T selector<T>({
 ///   web: 'hello Web'
 /// );
 /// ```
-T deviceSelector<T>({
-  T mobile,
-  T desktop,
-  T web,
+T? deviceSelector<T>({
+  T? mobile,
+  T? desktop,
+  T? web,
 }) {
   if (kIsWeb) return web;
 
