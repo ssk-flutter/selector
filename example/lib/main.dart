@@ -20,27 +20,28 @@ class MyApp extends StatelessWidget {
 
   _buildBody(BuildContext context) => Column(
         children: [
-          FlatButton(
+          TextButton(
               child: Text('selector'),
               onPressed: () => _showSnackBar(context, _selector())),
-          FlatButton(
+          TextButton(
               child: Text('deviceSelector'),
               onPressed: () => _showSnackBar(context, _deviceSelector())),
-          FlatButton(
+          TextButton(
               child: Text('parameter as function'),
               onPressed: () =>
                   _showSnackBar(context, _functionParameter().toString())),
-          FlatButton(
+          TextButton(
               child: Text('androidOrElse'),
               onPressed: () => _showSnackBar(context, _androidOrElse())),
-          FlatButton(
+          TextButton(
               child: Text('iosOrElse()'),
               onPressed: () => _showSnackBar(context, _iosOrElse())),
         ],
       );
 
   _showSnackBar(BuildContext context, String message) =>
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   _selector() => selector<String>(
         android: 'hello Android',

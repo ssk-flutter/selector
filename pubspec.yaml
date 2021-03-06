@@ -1,6 +1,6 @@
 name: selector
 description: Multi type supported platform selector to write functional programming.
-version: 0.2.4
+version: 0.2.5
 repository: https://github.com/ssk-flutter/selector
 
 environment:
