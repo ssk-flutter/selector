@@ -1,4 +1,4 @@
-package selector.selector_example
+package selector.example
 
 import io.flutter.embedding.android.FlutterActivity
 
