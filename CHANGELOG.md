@@ -1,3 +1,6 @@
+## 3.0.0
+* migrate to flutter 3
+
 ## 0.3.0
 * support null-safety
 
