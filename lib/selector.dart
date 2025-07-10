@@ -9,8 +9,24 @@ bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
 bool get isDesktop =>
     Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
-/// selector for known platforms
-/// selector for known platforms
+/// Selects a value based on the current platform.
+///
+/// All platform parameters are required. Throws [UnsupportedError] if the
+/// platform is not identified.
+///
+/// Example:
+/// ```dart
+/// String message = selector(
+///       web: 'Hello Web!',
+///       android: 'Hello Android!',
+///       ios: 'Hello iOS!',
+///       fuchsia: 'Hello Fuchsia!',
+///       linux: 'Hello Linux!',
+///       macos: 'Hello macOS!',
+///       windows: 'Hello Windows!',
+/// );
+/// print(message); // e.g., "Hello Android!" on an Android device
+/// ```
 T selector<T>({
   required T web,
   required T android,
@@ -44,7 +60,20 @@ T selector<T>({
   throw UnsupportedError('Unidentified platform $platform');
 }
 
-/// optional selector for known platforms
+/// Optional selector for known platforms.
+///
+/// Returns a value based on the current platform. Platform parameters are
+/// optional. Returns `null` if the current platform's value is not provided
+/// or if the platform is unidentified.
+///
+/// Example:
+/// ```dart
+/// String? specialMessage = optionalSelector(
+///       android: 'Special message for Android!',
+///       ios: 'Special message for iOS!',
+/// );
+/// print(specialMessage); // "Special message for Android!" on Android, null on macOS
+/// ```
 T? optionalSelector<T>({
   T? web,
   T? android,
@@ -77,14 +106,19 @@ T? optionalSelector<T>({
   return null;
 }
 
-/// deviceSelector
+/// Selects a value based on the device type (mobile, desktop, web).
 ///
+/// All device type parameters are required. Throws [UnsupportedError] if the
+/// device type is not identified.
+///
+/// Example:
 /// ```dart
-/// String result = deviceSelector(
-///   mobile: 'hello Mobile',
-///   desktop: 'hello Desktop',
-///   web: 'hello Web'
+/// String deviceType = deviceSelector(
+///       mobile: 'This is a mobile device.',
+///       desktop: 'This is a desktop device.',
+///       web: 'This is a web browser.',
 /// );
+/// print(deviceType); // e.g., "This is a mobile device." on an iOS phone
 /// ```
 T deviceSelector<T>({
   required T mobile,
@@ -112,14 +146,19 @@ T deviceSelector<T>({
   throw UnsupportedError('Unidentified device $deviceType');
 }
 
-/// optional deviceSelector
+/// Optional device selector.
 ///
+/// Similar to [deviceSelector], but device type parameters are optional.
+/// Returns `null` if the current device type's value is not provided or if
+/// the device type is unidentified.
+///
+/// Example:
 /// ```dart
-/// String result = deviceSelector(
-///   mobile: 'hello Mobile',
-///   desktop: 'hello Desktop',
-///   web: 'hello Web'
+/// String? specificDeviceMessage = optionalDeviceSelector(
+///       mobile: 'Mobile specific UI.',
+///       web: 'Web specific UI.',
 /// );
+/// print(specificDeviceMessage); // "Mobile specific UI." on Android, null on Windows desktop
 /// ```
 T? optionalDeviceSelector<T>({
   T? mobile,
@@ -170,7 +209,20 @@ T webOrElse<T>(T web, T elsePlatform) {
   return elsePlatform;
 }
 
-/// selector with orElse for known platforms
+/// Selects a value based on the current platform, with a fallback `orElse` value.
+///
+/// Use this when you want to provide a default fallback value if a specific
+/// platform's value is not defined.
+///
+/// Example:
+/// ```dart
+/// String apiKey = selectOrElse(
+///       android: 'YOUR_ANDROID_API_KEY',
+///       ios: 'YOUR_IOS_API_KEY',
+///       orElse: 'DEFAULT_API_KEY', // Used if platform is not Android or iOS
+/// );
+/// print(apiKey); // "YOUR_ANDROID_API_KEY" on Android, "DEFAULT_API_KEY" on Windows
+/// ```
 T selectOrElse<T>({
   T? web,
   T? android,
