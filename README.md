@@ -42,8 +42,14 @@ String result = deviceSelector(
 
 ## OrElse selector
 ```dart
-String admobKey = androidOrElse('android-key', 'iOS-key');
-String iosPreferredKey = iosOrElse('iOS-key', 'android-key');
+String admobKey = selectOrElse(
+      android: 'android-key',
+      orElse: 'ios-key',
+);
+String iosPreferredKey = selectOrElse(
+      ios: 'ios-key',
+      orElse: 'android-key',
+);
 ```
 
 ## Query

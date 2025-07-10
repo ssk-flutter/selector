@@ -101,4 +101,32 @@ void main() {
       );
     });
   });
+
+  group('selectOrElse', () {
+    test('returns android value on android platform', () {
+      final result = selectOrElse(
+        debugPlatform: 'android',
+        android: 'android',
+        orElse: 'default',
+      );
+      expect(result, 'android');
+    });
+
+    test('returns orElse value for not provided platform', () {
+      final result = selectOrElse(
+        debugPlatform: 'ios',
+        android: 'android',
+        orElse: 'default',
+      );
+      expect(result, 'default');
+    });
+
+    test('returns orElse value for unknown platform', () {
+      final result = selectOrElse(
+        debugPlatform: 'unknown',
+        orElse: 'default',
+      );
+      expect(result, 'default');
+    });
+  });
 }

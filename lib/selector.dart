@@ -124,35 +124,8 @@ T? optionalDeviceSelector<T>({
   throw 'Unidentified device ${Platform.operatingSystem}';
 }
 
-/// androidOrElse(a,b) run a on android or run b
-T androidOrElse<T>(T android, T elsePlatform) {
-  if (Platform.isAndroid) return android;
-  return elsePlatform;
-}
-
-/// iosOrElse(a,b) run a on iOS or run b
-T iosOrElse<T>(T ios, T elsePlatform) {
-  if (Platform.isIOS) return ios;
-  return elsePlatform;
-}
-
-T fuchsiaOrElse<T>(T fuchsia, T elsePlatform) {
-  if (Platform.isFuchsia) return fuchsia;
-  return elsePlatform;
-}
-
-T linuxOrElse<T>(T linux, T elsePlatform) {
-  if (Platform.isLinux) return linux;
-  return elsePlatform;
-}
-
 T macosOrElse<T>(T macos, T elsePlatform) {
   if (Platform.isMacOS) return macos;
-  return elsePlatform;
-}
-
-T windowsOrElse<T>(T windows, T elsePlatform) {
-  if (Platform.isWindows) return windows;
   return elsePlatform;
 }
 
@@ -172,4 +145,39 @@ T webOrElse<T>(T web, T elsePlatform) {
   if (kIsWeb) return web;
 
   return elsePlatform;
+}
+
+/// selector with orElse for known platforms
+T selectOrElse<T>({
+  T? web,
+  T? android,
+  T? ios,
+  T? macos,
+  T? fuchsia,
+  T? linux,
+  T? windows,
+  required T orElse,
+  @visibleForTesting
+  String? debugPlatform,
+}) {
+  final platform = debugPlatform ?? (kIsWeb ? 'web' : Platform.operatingSystem);
+
+  switch (platform) {
+    case 'web':
+      return web ?? orElse;
+    case 'android':
+      return android ?? orElse;
+    case 'ios':
+      return ios ?? orElse;
+    case 'fuchsia':
+      return fuchsia ?? orElse;
+    case 'linux':
+      return linux ?? orElse;
+    case 'macos':
+      return macos ?? orElse;
+    case 'windows':
+      return windows ?? orElse;
+  }
+
+  return orElse;
 }
