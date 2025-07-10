@@ -74,8 +74,7 @@ T? optionalSelector<T>({
     case 'windows':
       return windows;
   }
-
-  throw UnsupportedError('Unidentified platform $platform');
+  return null;
 }
 
 /// deviceSelector

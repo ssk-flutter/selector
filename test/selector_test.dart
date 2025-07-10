@@ -86,19 +86,15 @@ void main() {
       expect(result, 'web');
     });
 
-    test('returns null for not provided platform', () {
-      final result = optionalSelector(
+    test('returns null for not provided platform or unknown platform', () {
+      final result1 = optionalSelector(
         debugPlatform: 'ios',
         android: 'android',
       );
-      expect(result, isNull);
-    });
+      expect(result1, isNull);
 
-    test('throws UnsupportedError for unknown platform', () {
-      expect(
-        () => optionalSelector(debugPlatform: 'unknown'),
-        throwsA(isA<UnsupportedError>()),
-      );
+      final result2 = optionalSelector(debugPlatform: 'unknown');
+      expect(result2, isNull);
     });
   });
 
