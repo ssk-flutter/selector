@@ -102,6 +102,75 @@ void main() {
     });
   });
 
+  group('deviceSelector', () {
+    test('returns web value on web device', () {
+      final result = deviceSelector(
+        debugDeviceType: 'web',
+        mobile: 'mobile',
+        desktop: 'desktop',
+        web: 'web',
+      );
+      expect(result, 'web');
+    });
+
+    test('returns mobile value on mobile device', () {
+      final result = deviceSelector(
+        debugDeviceType: 'mobile',
+        mobile: 'mobile',
+        desktop: 'desktop',
+        web: 'web',
+      );
+      expect(result, 'mobile');
+    });
+
+    test('returns desktop value on desktop device', () {
+      final result = deviceSelector(
+        debugDeviceType: 'desktop',
+        mobile: 'mobile',
+        desktop: 'desktop',
+        web: 'web',
+      );
+      expect(result, 'desktop');
+    });
+
+    test('throws UnsupportedError for unknown device type', () {
+      expect(
+        () => deviceSelector(
+          debugDeviceType: 'unknown',
+          mobile: 'mobile',
+          desktop: 'desktop',
+          web: 'web',
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
+  });
+
+  group('optionalDeviceSelector', () {
+    test('returns web value on web device', () {
+      final result = optionalDeviceSelector(
+        debugDeviceType: 'web',
+        web: 'web',
+      );
+      expect(result, 'web');
+    });
+
+    test('returns null for not provided device type', () {
+      final result = optionalDeviceSelector(
+        debugDeviceType: 'mobile',
+        desktop: 'desktop',
+      );
+      expect(result, isNull);
+    });
+
+    test('throws UnsupportedError for unknown device type', () {
+      expect(
+        () => optionalDeviceSelector(debugDeviceType: 'unknown'),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
+  });
+
   group('selectOrElse', () {
     test('returns android value on android platform', () {
       final result = selectOrElse(

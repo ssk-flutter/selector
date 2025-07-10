@@ -91,14 +91,26 @@ T deviceSelector<T>({
   required T mobile,
   required T desktop,
   required T web,
+  @visibleForTesting
+  String? debugDeviceType,
 }) {
-  if (kIsWeb) return web;
+  final deviceType = debugDeviceType ??
+      (kIsWeb
+          ? 'web'
+          : (isMobile
+              ? 'mobile'
+              : (isDesktop ? 'desktop' : Platform.operatingSystem)));
 
-  if (isMobile) return mobile;
+  switch (deviceType) {
+    case 'web':
+      return web;
+    case 'mobile':
+      return mobile;
+    case 'desktop':
+      return desktop;
+  }
 
-  if (isDesktop) return desktop;
-
-  throw 'Unidentified device ${Platform.operatingSystem}';
+  throw UnsupportedError('Unidentified device $deviceType');
 }
 
 /// optional deviceSelector
@@ -114,14 +126,26 @@ T? optionalDeviceSelector<T>({
   T? mobile,
   T? desktop,
   T? web,
+  @visibleForTesting
+  String? debugDeviceType,
 }) {
-  if (kIsWeb) return web;
+  final deviceType = debugDeviceType ??
+      (kIsWeb
+          ? 'web'
+          : (isMobile
+              ? 'mobile'
+              : (isDesktop ? 'desktop' : Platform.operatingSystem)));
 
-  if (isMobile) return mobile;
+  switch (deviceType) {
+    case 'web':
+      return web;
+    case 'mobile':
+      return mobile;
+    case 'desktop':
+      return desktop;
+  }
 
-  if (isDesktop) return desktop;
-
-  throw 'Unidentified device ${Platform.operatingSystem}';
+  throw UnsupportedError('Unidentified device $deviceType');
 }
 
 T macosOrElse<T>(T macos, T elsePlatform) {
