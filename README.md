@@ -75,12 +75,21 @@ String? specificDeviceMessage = optionalDeviceSelector(
 print(specificDeviceMessage); // "Mobile specific UI." on Android, null on Windows desktop
 ```
 
-### OrElse selector (`selectOrElse`)
+### OrElse selector (`androidOrElse`, `iosOrElse`, etc.)
 
-Use `selectOrElse` when you want to provide a default fallback value if a specific platform's value is not defined.
+Use these platform-specific `orElse` functions for direct, explicit choices.
 
 ```dart
 import 'package:selector/selector.dart';
+
+String admobKey = androidOrElse('android-key', 'iOS-key');
+String iosPreferredKey = iosOrElse('iOS-key', 'android-key');
+```
+
+Alternatively, use the more flexible `selectOrElse` for multiple platform options:
+
+```dart
+import 'package:selector/selector.dart
 
 String apiKey = selectOrElse(
       android: 'YOUR_ANDROID_API_KEY',

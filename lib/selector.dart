@@ -186,29 +186,6 @@ T? optionalDeviceSelector<T>({
   throw UnsupportedError('Unidentified device $deviceType');
 }
 
-T macosOrElse<T>(T macos, T elsePlatform) {
-  if (Platform.isMacOS) return macos;
-  return elsePlatform;
-}
-
-T mobileOrElse<T>(T mobile, T elsePlatform) {
-  if (isMobile) return mobile;
-
-  return elsePlatform;
-}
-
-T desktopOrElse<T>(T desktop, T elsePlatform) {
-  if (isDesktop) return desktop;
-
-  return elsePlatform;
-}
-
-T webOrElse<T>(T web, T elsePlatform) {
-  if (kIsWeb) return web;
-
-  return elsePlatform;
-}
-
 /// Selects a value based on the current platform, with a fallback `orElse` value.
 ///
 /// Use this when you want to provide a default fallback value if a specific
@@ -255,4 +232,64 @@ T selectOrElse<T>({
   }
 
   return orElse;
+}
+
+/// Returns `androidValue` if the current platform is Android, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = androidOrElse('android_key', 'default_key');
+/// ```
+T androidOrElse<T>(T androidValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(android: androidValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+}
+
+/// Returns `iosValue` if the current platform is iOS, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = iosOrElse('ios_key', 'default_key');
+/// ```
+T iosOrElse<T>(T iosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(ios: iosValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+}
+
+/// Returns `fuchsiaValue` if the current platform is Fuchsia, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = fuchsiaOrElse('fuchsia_key', 'default_key');
+/// ```
+T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(fuchsia: fuchsiaValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+}
+
+/// Returns `linuxValue` if the current platform is Linux, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = linuxOrElse('linux_key', 'default_key');
+/// ```
+T linuxOrElse<T>(T linuxValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(linux: linuxValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+}
+
+/// Returns `macosValue` if the current platform is macOS, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = macosOrElse('macos_key', 'default_key');
+/// ```
+T macosOrElse<T>(T macosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(macos: macosValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+}
+
+/// Returns `windowsValue` if the current platform is Windows, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = windowsOrElse('windows_key', 'default_key');
+/// ```
+T windowsOrElse<T>(T windowsValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+  return selectOrElse(windows: windowsValue, orElse: elsePlatform, debugPlatform: debugPlatform);
 }

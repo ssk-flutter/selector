@@ -194,4 +194,41 @@ void main() {
       expect(result, 'default');
     });
   });
+
+  group('Platform-specific OrElse functions', () {
+    test('androidOrElse returns android value on android platform', () {
+      final result = androidOrElse('android_value', 'else_value', debugPlatform: 'android');
+      expect(result, 'android_value');
+    });
+
+    test('iosOrElse returns ios value on ios platform', () {
+      final result = iosOrElse('ios_value', 'else_value', debugPlatform: 'ios');
+      expect(result, 'ios_value');
+    });
+
+    test('fuchsiaOrElse returns fuchsia value on fuchsia platform', () {
+      final result = fuchsiaOrElse('fuchsia_value', 'else_value', debugPlatform: 'fuchsia');
+      expect(result, 'fuchsia_value');
+    });
+
+    test('linuxOrElse returns linux value on linux platform', () {
+      final result = linuxOrElse('linux_value', 'else_value', debugPlatform: 'linux');
+      expect(result, 'linux_value');
+    });
+
+    test('macosOrElse returns macos value on macos platform', () {
+      final result = macosOrElse('macos_value', 'else_value', debugPlatform: 'macos');
+      expect(result, 'macos_value');
+    });
+
+    test('windowsOrElse returns windows value on windows platform', () {
+      final result = windowsOrElse('windows_value', 'else_value', debugPlatform: 'windows');
+      expect(result, 'windows_value');
+    });
+
+    test('androidOrElse returns else value on non-android platform', () {
+      final result = androidOrElse('android_value', 'else_value', debugPlatform: 'ios');
+      expect(result, 'else_value');
+    });
+  });
 }
