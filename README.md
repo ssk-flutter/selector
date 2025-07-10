@@ -15,7 +15,7 @@ String result = selector(
       ios: 'hello iOS',
       fuchsia: 'hello Fuchsia',
       linux: 'hello Linux',
-      mac: 'hello MacOS',
+      macos: 'hello MacOS',
       windows: 'hello Windows',
 );
 ```

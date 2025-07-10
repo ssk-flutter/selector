@@ -13,7 +13,7 @@ bool get isDesktop =>
 T selector<T>({
   required T android,
   required T ios,
-  required T mac,
+  required T macos,
   required T fuchsia,
   required T linux,
   required T windows,
@@ -22,7 +22,7 @@ T selector<T>({
   if (Platform.isIOS) return ios;
   if (Platform.isFuchsia) return fuchsia;
   if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return mac;
+  if (Platform.isMacOS) return macos;
   if (Platform.isWindows) return windows;
 
   throw 'Unidentified platform ${Platform.operatingSystem}';
@@ -32,7 +32,7 @@ T selector<T>({
 T? optionalSelector<T>({
   T? android,
   T? ios,
-  T? mac,
+  T? macos,
   T? fuchsia,
   T? linux,
   T? windows,
@@ -41,7 +41,7 @@ T? optionalSelector<T>({
   if (Platform.isIOS) return ios;
   if (Platform.isFuchsia) return fuchsia;
   if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return mac;
+  if (Platform.isMacOS) return macos;
   if (Platform.isWindows) return windows;
 
   throw 'Unidentified platform ${Platform.operatingSystem}';
@@ -115,8 +115,8 @@ T linuxOrElse<T>(T linux, T elsePlatform) {
   return elsePlatform;
 }
 
-T macOrElse<T>(T mac, T elsePlatform) {
-  if (Platform.isMacOS) return mac;
+T macosOrElse<T>(T macos, T elsePlatform) {
+  if (Platform.isMacOS) return macos;
   return elsePlatform;
 }
 
