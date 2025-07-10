@@ -1,3 +1,6 @@
+## 4.0.0-dev.2
+* Reintroduced explicit `...OrElse` functions for clarity.
+
 ## 4.0.0-dev.1
 * API Rework: Renamed `mac` to `macos`, consolidated `...OrElse` functions into `selectOrElse`.
 * Added web platform support to `selector` and `optionalSelector`.
