@@ -11,6 +11,7 @@ Multi type support Platform Selector
 - with `selector`
 ```dart
 String result = selector(
+      web: 'hello Web',
       android: 'hello Android',
       ios: 'hello iOS',
       fuchsia: 'hello Fuchsia',

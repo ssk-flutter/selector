@@ -11,6 +11,7 @@ bool get isDesktop =>
 
 /// selector for known platforms
 T selector<T>({
+  required T web,
   required T android,
   required T ios,
   required T macos,
@@ -18,6 +19,7 @@ T selector<T>({
   required T linux,
   required T windows,
 }) {
+  if (kIsWeb) return web;
   if (Platform.isAndroid) return android;
   if (Platform.isIOS) return ios;
   if (Platform.isFuchsia) return fuchsia;
@@ -30,6 +32,7 @@ T selector<T>({
 
 /// optional selector for known platforms
 T? optionalSelector<T>({
+  T? web,
   T? android,
   T? ios,
   T? macos,
@@ -37,6 +40,7 @@ T? optionalSelector<T>({
   T? linux,
   T? windows,
 }) {
+  if (kIsWeb) return web;
   if (Platform.isAndroid) return android;
   if (Platform.isIOS) return ios;
   if (Platform.isFuchsia) return fuchsia;
