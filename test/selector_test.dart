@@ -1,23 +1,104 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:selector/selector.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('selector');
+  group('selector', () {
+    test('returns web value on web platform', () {
+      final result = selector(
+        debugPlatform: 'web',
+        web: 'web',
+        android: 'android',
+        ios: 'ios',
+        macos: 'macos',
+        fuchsia: 'fuchsia',
+        linux: 'linux',
+        windows: 'windows',
+      );
+      expect(result, 'web');
+    });
 
-  TestWidgetsFlutterBinding.ensureInitialized();
+    test('returns android value on android platform', () {
+      final result = selector(
+        debugPlatform: 'android',
+        web: 'web',
+        android: 'android',
+        ios: 'ios',
+        macos: 'macos',
+        fuchsia: 'fuchsia',
+        linux: 'linux',
+        windows: 'windows',
+      );
+      expect(result, 'android');
+    });
 
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+    test('returns ios value on ios platform', () {
+      final result = selector(
+        debugPlatform: 'ios',
+        web: 'web',
+        android: 'android',
+        ios: 'ios',
+        macos: 'macos',
+        fuchsia: 'fuchsia',
+        linux: 'linux',
+        windows: 'windows',
+      );
+      expect(result, 'ios');
+    });
+
+    test('returns macos value on macos platform', () {
+      final result = selector(
+        debugPlatform: 'macos',
+        web: 'web',
+        android: 'android',
+        ios: 'ios',
+        macos: 'macos',
+        fuchsia: 'fuchsia',
+        linux: 'linux',
+        windows: 'windows',
+      );
+      expect(result, 'macos');
+    });
+
+    test('throws UnsupportedError for unknown platform', () {
+      expect(
+        () => selector(
+          debugPlatform: 'unknown',
+          web: 'web',
+          android: 'android',
+          ios: 'ios',
+          macos: 'macos',
+          fuchsia: 'fuchsia',
+          linux: 'linux',
+          windows: 'windows',
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
     });
   });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
+  group('optionalSelector', () {
+    test('returns web value on web platform', () {
+      final result = optionalSelector(
+        debugPlatform: 'web',
+        web: 'web',
+        android: 'android',
+      );
+      expect(result, 'web');
+    });
 
-  test('getPlatformVersion', () async {
-    // expect(await Selector.platformVersion, '42');
+    test('returns null for not provided platform', () {
+      final result = optionalSelector(
+        debugPlatform: 'ios',
+        android: 'android',
+      );
+      expect(result, isNull);
+    });
+
+    test('throws UnsupportedError for unknown platform', () {
+      expect(
+        () => optionalSelector(debugPlatform: 'unknown'),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
   });
 }

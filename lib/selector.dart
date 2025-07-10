@@ -10,6 +10,7 @@ bool get isDesktop =>
     Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 /// selector for known platforms
+/// selector for known platforms
 T selector<T>({
   required T web,
   required T android,
@@ -18,16 +19,29 @@ T selector<T>({
   required T fuchsia,
   required T linux,
   required T windows,
+  @visibleForTesting
+  String? debugPlatform,
 }) {
-  if (kIsWeb) return web;
-  if (Platform.isAndroid) return android;
-  if (Platform.isIOS) return ios;
-  if (Platform.isFuchsia) return fuchsia;
-  if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return macos;
-  if (Platform.isWindows) return windows;
+  final platform = debugPlatform ?? (kIsWeb ? 'web' : Platform.operatingSystem);
 
-  throw 'Unidentified platform ${Platform.operatingSystem}';
+  switch (platform) {
+    case 'web':
+      return web;
+    case 'android':
+      return android;
+    case 'ios':
+      return ios;
+    case 'fuchsia':
+      return fuchsia;
+    case 'linux':
+      return linux;
+    case 'macos':
+      return macos;
+    case 'windows':
+      return windows;
+  }
+
+  throw UnsupportedError('Unidentified platform $platform');
 }
 
 /// optional selector for known platforms
@@ -39,16 +53,29 @@ T? optionalSelector<T>({
   T? fuchsia,
   T? linux,
   T? windows,
+  @visibleForTesting
+  String? debugPlatform,
 }) {
-  if (kIsWeb) return web;
-  if (Platform.isAndroid) return android;
-  if (Platform.isIOS) return ios;
-  if (Platform.isFuchsia) return fuchsia;
-  if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return macos;
-  if (Platform.isWindows) return windows;
+  final platform = debugPlatform ?? (kIsWeb ? 'web' : Platform.operatingSystem);
 
-  throw 'Unidentified platform ${Platform.operatingSystem}';
+  switch (platform) {
+    case 'web':
+      return web;
+    case 'android':
+      return android;
+    case 'ios':
+      return ios;
+    case 'fuchsia':
+      return fuchsia;
+    case 'linux':
+      return linux;
+    case 'macos':
+      return macos;
+    case 'windows':
+      return windows;
+  }
+
+  throw UnsupportedError('Unidentified platform $platform');
 }
 
 /// deviceSelector
