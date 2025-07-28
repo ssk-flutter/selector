@@ -27,6 +27,8 @@ class MyApp extends StatelessWidget {
               onPressed: () => _showSnackBar(context, _functionParameter().toString())),
           TextButton(child: Text('androidOrElse'), onPressed: () => _showSnackBar(context, _androidOrElse())),
           TextButton(child: Text('iosOrElse()'), onPressed: () => _showSnackBar(context, _iosOrElse())),
+          TextButton(child: Text('mobileOrElse()'), onPressed: () => _showSnackBar(context, _mobileOrElse())),
+          TextButton(child: Text('desktopOrElse()'), onPressed: () => _showSnackBar(context, _desktopOrElse())),
         ],
       );
 
@@ -62,4 +64,8 @@ class MyApp extends StatelessWidget {
   _androidOrElse() => androidOrElse<String>('android-admob-id', 'ios-admob-id');
 
   _iosOrElse() => iosOrElse<String>('ios-admob-id', 'android-admob-id');
+
+  _mobileOrElse() => mobileOrElse<String>('mobile-admob-id', 'desktop-admob-id');
+
+  _desktopOrElse() => desktopOrElse<String>('desktop-admob-id', 'mobile-admob-id');
 }

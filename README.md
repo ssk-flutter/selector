@@ -84,6 +84,8 @@ import 'package:selector/selector.dart';
 
 String admobKey = androidOrElse('android-key', 'iOS-key');
 String iosPreferredKey = iosOrElse('iOS-key', 'android-key');
+String mobileSpecific = mobileOrElse('mobile_value', 'default_value');
+String desktopSpecific = desktopOrElse('desktop_value', 'default_value');
 ```
 
 Alternatively, use the more flexible `selectOrElse` for multiple platform options:

@@ -199,3 +199,27 @@ T macosOrElse<T>(T macosValue, T elsePlatform) {
 T windowsOrElse<T>(T windowsValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
+
+/// Returns `mobileValue` if the current device is mobile, otherwise returns `elsePlatform` (stub).
+///
+/// Throws [UnsupportedError] as this is a stub implementation.
+///
+/// Example:
+/// ```dart
+/// String key = mobileOrElse('mobile_key', 'default_key');
+/// ```
+T mobileOrElse<T>(T mobileValue, T elsePlatform) {
+  throw UnsupportedError('Unsupported platform');
+}
+
+/// Returns `desktopValue` if the current device is desktop, otherwise returns `elsePlatform` (stub).
+///
+/// Throws [UnsupportedError] as this is a stub implementation.
+///
+/// Example:
+/// ```dart
+/// String key = desktopOrElse('desktop_key', 'default_key');
+/// ```
+T desktopOrElse<T>(T desktopValue, T elsePlatform) {
+  throw UnsupportedError('Unsupported platform');
+}

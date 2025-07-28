@@ -216,6 +216,16 @@ void main() {
       expect(result, 'windows_value');
     });
 
+    test('mobileOrElse returns mobile value on mobile device', () {
+      final result = mobileOrElse('mobile_value', 'else_value');
+      expect(result, 'mobile_value');
+    });
+
+    test('desktopOrElse returns desktop value on desktop device', () {
+      final result = desktopOrElse('desktop_value', 'else_value');
+      expect(result, 'desktop_value');
+    });
+
     test('androidOrElse returns else value on non-android platform', () {
       final result = androidOrElse('android_value', 'else_value');
       expect(result, 'else_value');

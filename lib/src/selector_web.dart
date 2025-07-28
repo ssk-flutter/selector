@@ -197,3 +197,23 @@ T macosOrElse<T>(T macosValue, T elsePlatform) {
 T windowsOrElse<T>(T windowsValue, T elsePlatform) {
   return selectOrElse(windows: windowsValue, orElse: elsePlatform);
 }
+
+/// Returns `mobileValue` if the current device is mobile, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = mobileOrElse('mobile_key', 'default_key');
+/// ```
+T mobileOrElse<T>(T mobileValue, T elsePlatform) {
+  return deviceSelector(mobile: mobileValue, desktop: elsePlatform, web: elsePlatform);
+}
+
+/// Returns `desktopValue` if the current device is desktop, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = desktopOrElse('desktop_key', 'default_key');
+/// ```
+T desktopOrElse<T>(T desktopValue, T elsePlatform) {
+  return deviceSelector(mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
+}
