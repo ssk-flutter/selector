@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           TextButton(child: Text('iosOrElse()'), onPressed: () => _showSnackBar(context, _iosOrElse())),
           TextButton(child: Text('mobileOrElse()'), onPressed: () => _showSnackBar(context, _mobileOrElse())),
           TextButton(child: Text('desktopOrElse()'), onPressed: () => _showSnackBar(context, _desktopOrElse())),
+          TextButton(child: Text('webOrElse()'), onPressed: () => _showSnackBar(context, _webOrElse())),
         ],
       );
 
@@ -68,4 +69,6 @@ class MyApp extends StatelessWidget {
   _mobileOrElse() => mobileOrElse<String>('mobile-admob-id', 'desktop-admob-id');
 
   _desktopOrElse() => desktopOrElse<String>('desktop-admob-id', 'mobile-admob-id');
+
+  _webOrElse() => webOrElse<String>('web-admob-id', 'non-web-admob-id');
 }

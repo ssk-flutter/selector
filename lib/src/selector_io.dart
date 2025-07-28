@@ -251,10 +251,21 @@ T mobileOrElse<T>(T mobileValue, T elsePlatform) {
 }
 
 /// Returns `desktopValue` if the current device is desktop, otherwise returns `elsePlatform`.
-////// Example:
+///
+/// Example:
 /// ```dart
 /// String key = desktopOrElse('desktop_key', 'default_key');
 /// ```
 T desktopOrElse<T>(T desktopValue, T elsePlatform) {
   return deviceSelector(mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
+}
+
+/// Returns `webValue` if the current device is web, otherwise returns `elsePlatform`.
+///
+/// Example:
+/// ```dart
+/// String key = webOrElse('web_key', 'default_key');
+/// ```
+T webOrElse<T>(T webValue, T elsePlatform) {
+  return deviceSelector(mobile: elsePlatform, desktop: elsePlatform, web: webValue);
 }

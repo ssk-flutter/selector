@@ -1,3 +1,6 @@
+## 4.0.0-dev.5
+* Reintroduced explicit `webOrElse` function.
+
 ## 4.0.0-dev.4
 * Reintroduced explicit `mobileOrElse` and `desktopOrElse` functions.
 

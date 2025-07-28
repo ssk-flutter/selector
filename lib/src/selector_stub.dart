@@ -223,3 +223,15 @@ T mobileOrElse<T>(T mobileValue, T elsePlatform) {
 T desktopOrElse<T>(T desktopValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
+
+/// Returns `webValue` if the current device is web, otherwise returns `elsePlatform` (stub).
+///
+/// Throws [UnsupportedError] as this is a stub implementation.
+///
+/// Example:
+/// ```dart
+/// String key = webOrElse('web_key', 'default_key');
+/// ```
+T webOrElse<T>(T webValue, T elsePlatform) {
+  throw UnsupportedError('Unsupported platform');
+}
