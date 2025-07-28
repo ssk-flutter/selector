@@ -1,3 +1,6 @@
+## 4.0.0-dev.3
+* Split selector into platform-specific files (`selector_stub.dart`, `selector_io.dart`, `selector_web.dart`).
+
 ## 4.0.0-dev.2
 * Reintroduced explicit `...OrElse` functions for clarity.
 
