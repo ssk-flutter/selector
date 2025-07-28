@@ -1,12 +1,12 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 /// isMobile device
 bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
 
 /// isDesktop device
-bool get isDesktop =>
-    Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+bool get isDesktop => Platform.isWindows || Platform.isLinux || Platform.isMacOS;
 
 /// Selects a value based on the current platform.
 ///
@@ -34,29 +34,15 @@ T selector<T>({
   required T fuchsia,
   required T linux,
   required T windows,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
-  final platform = debugPlatform ?? Platform.operatingSystem;
+  if (Platform.isAndroid) return android;
+  if (Platform.isIOS) return ios;
+  if (Platform.isFuchsia) return fuchsia;
+  if (Platform.isLinux) return linux;
+  if (Platform.isMacOS) return macos;
+  if (Platform.isWindows) return windows;
 
-  switch (platform) {
-    case 'web':
-      return web;
-    case 'android':
-      return android;
-    case 'ios':
-      return ios;
-    case 'fuchsia':
-      return fuchsia;
-    case 'linux':
-      return linux;
-    case 'macos':
-      return macos;
-    case 'windows':
-      return windows;
-  }
-
-  throw UnsupportedError('Unidentified platform $platform');
+  throw UnsupportedError('Unidentified platform ${Platform.operatingSystem}');
 }
 
 /// Optional selector for known platforms.
@@ -81,27 +67,15 @@ T? optionalSelector<T>({
   T? fuchsia,
   T? linux,
   T? windows,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
-  final platform = debugPlatform ?? Platform.operatingSystem;
+  if (Platform.isAndroid) return android;
+  if (Platform.isIOS) return ios;
+  if (Platform.isFuchsia) return fuchsia;
+  if (Platform.isLinux) return linux;
+  if (Platform.isMacOS) return macos;
+  if (Platform.isWindows) return windows;
+  if (kIsWeb) return web;
 
-  switch (platform) {
-    case 'web':
-      return web;
-    case 'android':
-      return android;
-    case 'ios':
-      return ios;
-    case 'fuchsia':
-      return fuchsia;
-    case 'linux':
-      return linux;
-    case 'macos':
-      return macos;
-    case 'windows':
-      return windows;
-  }
   return null;
 }
 
@@ -123,13 +97,9 @@ T deviceSelector<T>({
   required T mobile,
   required T desktop,
   required T web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
-  final deviceType = debugDeviceType ??
-      (isMobile
-          ? 'mobile'
-          : (isDesktop ? 'desktop' : Platform.operatingSystem));
+  final deviceType = debugDeviceType ?? (isMobile ? 'mobile' : (isDesktop ? 'desktop' : Platform.operatingSystem));
 
   switch (deviceType) {
     case 'web':
@@ -161,13 +131,9 @@ T? optionalDeviceSelector<T>({
   T? mobile,
   T? desktop,
   T? web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
-  final deviceType = debugDeviceType ??
-      (isMobile
-          ? 'mobile'
-          : (isDesktop ? 'desktop' : Platform.operatingSystem));
+  final deviceType = debugDeviceType ?? (isMobile ? 'mobile' : (isDesktop ? 'desktop' : Platform.operatingSystem));
 
   switch (deviceType) {
     case 'web':
@@ -204,28 +170,13 @@ T selectOrElse<T>({
   T? linux,
   T? windows,
   required T orElse,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
-  final platform = debugPlatform ?? Platform.operatingSystem;
-
-  switch (platform) {
-    case 'web':
-      return web ?? orElse;
-    case 'android':
-      return android ?? orElse;
-    case 'ios':
-      return ios ?? orElse;
-    case 'fuchsia':
-      return fuchsia ?? orElse;
-    case 'linux':
-      return linux ?? orElse;
-    case 'macos':
-      return macos ?? orElse;
-    case 'windows':
-      return windows ?? orElse;
-  }
-
+  if (Platform.isAndroid) return android ?? orElse;
+  if (Platform.isIOS) return ios ?? orElse;
+  if (Platform.isFuchsia) return fuchsia ?? orElse;
+  if (Platform.isLinux) return linux ?? orElse;
+  if (Platform.isMacOS) return macos ?? orElse;
+  if (Platform.isWindows) return windows ?? orElse;
   return orElse;
 }
 
@@ -235,8 +186,8 @@ T selectOrElse<T>({
 /// ```dart
 /// String key = androidOrElse('android_key', 'default_key');
 /// ```
-T androidOrElse<T>(T androidValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(android: androidValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T androidOrElse<T>(T androidValue, T elsePlatform) {
+  return selectOrElse(android: androidValue, orElse: elsePlatform);
 }
 
 /// Returns `iosValue` if the current platform is iOS, otherwise returns `elsePlatform`.
@@ -245,8 +196,8 @@ T androidOrElse<T>(T androidValue, T elsePlatform, {@visibleForTesting String? d
 /// ```dart
 /// String key = iosOrElse('ios_key', 'default_key');
 /// ```
-T iosOrElse<T>(T iosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(ios: iosValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T iosOrElse<T>(T iosValue, T elsePlatform) {
+  return selectOrElse(ios: iosValue, orElse: elsePlatform);
 }
 
 /// Returns `fuchsiaValue` if the current platform is Fuchsia, otherwise returns `elsePlatform`.
@@ -255,8 +206,8 @@ T iosOrElse<T>(T iosValue, T elsePlatform, {@visibleForTesting String? debugPlat
 /// ```dart
 /// String key = fuchsiaOrElse('fuchsia_key', 'default_key');
 /// ```
-T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(fuchsia: fuchsiaValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform) {
+  return selectOrElse(fuchsia: fuchsiaValue, orElse: elsePlatform);
 }
 
 /// Returns `linuxValue` if the current platform is Linux, otherwise returns `elsePlatform`.
@@ -265,8 +216,8 @@ T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform, {@visibleForTesting String? d
 /// ```dart
 /// String key = linuxOrElse('linux_key', 'default_key');
 /// ```
-T linuxOrElse<T>(T linuxValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(linux: linuxValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T linuxOrElse<T>(T linuxValue, T elsePlatform) {
+  return selectOrElse(linux: linuxValue, orElse: elsePlatform);
 }
 
 /// Returns `macosValue` if the current platform is macOS, otherwise returns `elsePlatform`.
@@ -275,8 +226,8 @@ T linuxOrElse<T>(T linuxValue, T elsePlatform, {@visibleForTesting String? debug
 /// ```dart
 /// String key = macosOrElse('macos_key', 'default_key');
 /// ```
-T macosOrElse<T>(T macosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(macos: macosValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T macosOrElse<T>(T macosValue, T elsePlatform) {
+  return selectOrElse(macos: macosValue, orElse: elsePlatform);
 }
 
 /// Returns `windowsValue` if the current platform is Windows, otherwise returns `elsePlatform`.
@@ -285,6 +236,6 @@ T macosOrElse<T>(T macosValue, T elsePlatform, {@visibleForTesting String? debug
 /// ```dart
 /// String key = windowsOrElse('windows_key', 'default_key');
 /// ```
-T windowsOrElse<T>(T windowsValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
-  return selectOrElse(windows: windowsValue, orElse: elsePlatform, debugPlatform: debugPlatform);
+T windowsOrElse<T>(T windowsValue, T elsePlatform) {
+  return selectOrElse(windows: windowsValue, orElse: elsePlatform);
 }

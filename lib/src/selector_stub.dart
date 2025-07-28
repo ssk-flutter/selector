@@ -31,8 +31,6 @@ T selector<T>({
   required T fuchsia,
   required T linux,
   required T windows,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
   throw UnsupportedError('Unsupported platform');
 }
@@ -57,8 +55,6 @@ T? optionalSelector<T>({
   T? fuchsia,
   T? linux,
   T? windows,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
   throw UnsupportedError('Unsupported platform');
 }
@@ -80,8 +76,7 @@ T deviceSelector<T>({
   required T mobile,
   required T desktop,
   required T web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
   throw UnsupportedError('Unsupported platform');
 }
@@ -102,8 +97,7 @@ T? optionalDeviceSelector<T>({
   T? mobile,
   T? desktop,
   T? web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
   throw UnsupportedError('Unsupported platform');
 }
@@ -130,8 +124,6 @@ T selectOrElse<T>({
   T? linux,
   T? windows,
   required T orElse,
-  @visibleForTesting
-  String? debugPlatform,
 }) {
   throw UnsupportedError('Unsupported platform');
 }
@@ -144,7 +136,7 @@ T selectOrElse<T>({
 /// ```dart
 /// String key = androidOrElse('android_key', 'default_key');
 /// ```
-T androidOrElse<T>(T androidValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T androidOrElse<T>(T androidValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -156,7 +148,7 @@ T androidOrElse<T>(T androidValue, T elsePlatform, {@visibleForTesting String? d
 /// ```dart
 /// String key = iosOrElse('ios_key', 'default_key');
 /// ```
-T iosOrElse<T>(T iosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T iosOrElse<T>(T iosValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -168,7 +160,7 @@ T iosOrElse<T>(T iosValue, T elsePlatform, {@visibleForTesting String? debugPlat
 /// ```dart
 /// String key = fuchsiaOrElse('fuchsia_key', 'default_key');
 /// ```
-T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -180,7 +172,7 @@ T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform, {@visibleForTesting String? d
 /// ```dart
 /// String key = linuxOrElse('linux_key', 'default_key');
 /// ```
-T linuxOrElse<T>(T linuxValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T linuxOrElse<T>(T linuxValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -192,7 +184,7 @@ T linuxOrElse<T>(T linuxValue, T elsePlatform, {@visibleForTesting String? debug
 /// ```dart
 /// String key = macosOrElse('macos_key', 'default_key');
 /// ```
-T macosOrElse<T>(T macosValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T macosOrElse<T>(T macosValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -204,6 +196,6 @@ T macosOrElse<T>(T macosValue, T elsePlatform, {@visibleForTesting String? debug
 /// ```dart
 /// String key = windowsOrElse('windows_key', 'default_key');
 /// ```
-T windowsOrElse<T>(T windowsValue, T elsePlatform, {@visibleForTesting String? debugPlatform}) {
+T windowsOrElse<T>(T windowsValue, T elsePlatform) {
   throw UnsupportedError('Unsupported platform');
 }

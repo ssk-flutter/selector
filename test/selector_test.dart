@@ -5,7 +5,6 @@ void main() {
   group('selector', () {
     test('returns web value on web platform', () {
       final result = selector(
-        debugPlatform: 'web',
         web: 'web',
         android: 'android',
         ios: 'ios',
@@ -19,7 +18,6 @@ void main() {
 
     test('returns android value on android platform', () {
       final result = selector(
-        debugPlatform: 'android',
         web: 'web',
         android: 'android',
         ios: 'ios',
@@ -33,7 +31,6 @@ void main() {
 
     test('returns ios value on ios platform', () {
       final result = selector(
-        debugPlatform: 'ios',
         web: 'web',
         android: 'android',
         ios: 'ios',
@@ -47,7 +44,6 @@ void main() {
 
     test('returns macos value on macos platform', () {
       final result = selector(
-        debugPlatform: 'macos',
         web: 'web',
         android: 'android',
         ios: 'ios',
@@ -62,7 +58,6 @@ void main() {
     test('throws UnsupportedError for unknown platform', () {
       expect(
         () => selector(
-          debugPlatform: 'unknown',
           web: 'web',
           android: 'android',
           ios: 'ios',
@@ -79,7 +74,6 @@ void main() {
   group('optionalSelector', () {
     test('returns web value on web platform', () {
       final result = optionalSelector(
-        debugPlatform: 'web',
         web: 'web',
         android: 'android',
       );
@@ -88,12 +82,11 @@ void main() {
 
     test('returns null for not provided platform or unknown platform', () {
       final result1 = optionalSelector(
-        debugPlatform: 'ios',
         android: 'android',
       );
       expect(result1, isNull);
 
-      final result2 = optionalSelector(debugPlatform: 'unknown');
+      final result2 = optionalSelector();
       expect(result2, isNull);
     });
   });
@@ -170,7 +163,6 @@ void main() {
   group('selectOrElse', () {
     test('returns android value on android platform', () {
       final result = selectOrElse(
-        debugPlatform: 'android',
         android: 'android',
         orElse: 'default',
       );
@@ -179,7 +171,6 @@ void main() {
 
     test('returns orElse value for not provided platform', () {
       final result = selectOrElse(
-        debugPlatform: 'ios',
         android: 'android',
         orElse: 'default',
       );
@@ -188,7 +179,6 @@ void main() {
 
     test('returns orElse value for unknown platform', () {
       final result = selectOrElse(
-        debugPlatform: 'unknown',
         orElse: 'default',
       );
       expect(result, 'default');
@@ -197,37 +187,37 @@ void main() {
 
   group('Platform-specific OrElse functions', () {
     test('androidOrElse returns android value on android platform', () {
-      final result = androidOrElse('android_value', 'else_value', debugPlatform: 'android');
+      final result = androidOrElse('android_value', 'else_value');
       expect(result, 'android_value');
     });
 
     test('iosOrElse returns ios value on ios platform', () {
-      final result = iosOrElse('ios_value', 'else_value', debugPlatform: 'ios');
+      final result = iosOrElse('ios_value', 'else_value');
       expect(result, 'ios_value');
     });
 
     test('fuchsiaOrElse returns fuchsia value on fuchsia platform', () {
-      final result = fuchsiaOrElse('fuchsia_value', 'else_value', debugPlatform: 'fuchsia');
+      final result = fuchsiaOrElse('fuchsia_value', 'else_value');
       expect(result, 'fuchsia_value');
     });
 
     test('linuxOrElse returns linux value on linux platform', () {
-      final result = linuxOrElse('linux_value', 'else_value', debugPlatform: 'linux');
+      final result = linuxOrElse('linux_value', 'else_value');
       expect(result, 'linux_value');
     });
 
     test('macosOrElse returns macos value on macos platform', () {
-      final result = macosOrElse('macos_value', 'else_value', debugPlatform: 'macos');
+      final result = macosOrElse('macos_value', 'else_value');
       expect(result, 'macos_value');
     });
 
     test('windowsOrElse returns windows value on windows platform', () {
-      final result = windowsOrElse('windows_value', 'else_value', debugPlatform: 'windows');
+      final result = windowsOrElse('windows_value', 'else_value');
       expect(result, 'windows_value');
     });
 
     test('androidOrElse returns else value on non-android platform', () {
-      final result = androidOrElse('android_value', 'else_value', debugPlatform: 'ios');
+      final result = androidOrElse('android_value', 'else_value');
       expect(result, 'else_value');
     });
   });
