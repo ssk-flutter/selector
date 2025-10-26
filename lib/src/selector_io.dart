@@ -1,31 +1,72 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
-/// isMobile device
-bool get isMobile => Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
+import 'selector_overrides.dart';
 
-/// isDesktop device
-bool get isDesktop => Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+export 'selector_overrides.dart'
+    show debugTargetPlatformOverride, debugIsWebOverride;
 
-/// Selects a value based on the current platform.
-///
-/// All platform parameters are required. Throws [UnsupportedError] if the
-/// platform is not identified.
-///
-/// Example:
-/// ```dart
-/// String message = selector(
-///       web: 'Hello Web!',
-///       android: 'Hello Android!',
-///       ios: 'Hello iOS!',
-///       fuchsia: 'Hello Fuchsia!',
-///       linux: 'Hello Linux!',
-///       macos: 'Hello macOS!',
-///       windows: 'Hello Windows!',
-/// );
-/// print(message); // e.g., "Hello Android!" on an Android device
-/// ```
+bool get _isWeb => debugIsWebOverride ?? kIsWeb;
+
+TargetPlatform get _targetPlatform =>
+    debugTargetPlatformOverride ?? defaultTargetPlatform;
+
+String _platformLabel() {
+  if (_isWeb) {
+    return 'web';
+  }
+  final description = _targetPlatform.toString();
+  final dotIndex = description.indexOf('.');
+  return dotIndex == -1 ? description : description.substring(dotIndex + 1);
+}
+
+bool get isMobile {
+  if (_isWeb) {
+    return false;
+  }
+  switch (_targetPlatform) {
+    case TargetPlatform.android:
+    case TargetPlatform.fuchsia:
+    case TargetPlatform.iOS:
+      return true;
+    case TargetPlatform.macOS:
+    case TargetPlatform.windows:
+    case TargetPlatform.linux:
+      return false;
+  }
+}
+
+bool get isDesktop {
+  if (_isWeb) {
+    return false;
+  }
+  switch (_targetPlatform) {
+    case TargetPlatform.macOS:
+    case TargetPlatform.windows:
+    case TargetPlatform.linux:
+      return true;
+    case TargetPlatform.android:
+    case TargetPlatform.fuchsia:
+    case TargetPlatform.iOS:
+      return false;
+  }
+}
+
+String _resolveDeviceType({String? debugDeviceType}) {
+  if (debugDeviceType != null) {
+    return debugDeviceType;
+  }
+  if (_isWeb) {
+    return 'web';
+  }
+  if (isMobile) {
+    return 'mobile';
+  }
+  if (isDesktop) {
+    return 'desktop';
+  }
+  return _platformLabel();
+}
+
 T selector<T>({
   required T web,
   required T android,
@@ -35,30 +76,27 @@ T selector<T>({
   required T linux,
   required T windows,
 }) {
-  if (Platform.isAndroid) return android;
-  if (Platform.isIOS) return ios;
-  if (Platform.isFuchsia) return fuchsia;
-  if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return macos;
-  if (Platform.isWindows) return windows;
+  if (_isWeb) {
+    return web;
+  }
 
-  throw UnsupportedError('Unidentified platform ${Platform.operatingSystem}');
+  final mapping = <TargetPlatform, T>{
+    TargetPlatform.android: android,
+    TargetPlatform.iOS: ios,
+    TargetPlatform.fuchsia: fuchsia,
+    TargetPlatform.macOS: macos,
+    TargetPlatform.windows: windows,
+    TargetPlatform.linux: linux,
+  };
+
+  final result = mapping[_targetPlatform];
+  if (result != null) {
+    return result;
+  }
+
+  throw UnsupportedError('Unidentified platform ${_platformLabel()}');
 }
 
-/// Optional selector for known platforms.
-///
-/// Returns a value based on the current platform. Platform parameters are
-/// optional. Returns `null` if the current platform's value is not provided
-/// or if the platform is unidentified.
-///
-/// Example:
-/// ```dart
-/// String? specialMessage = optionalSelector(
-///       android: 'Special message for Android!',
-///       ios: 'Special message for iOS!',
-/// );
-/// print(specialMessage); // "Special message for Android!" on Android, null on macOS
-/// ```
 T? optionalSelector<T>({
   T? web,
   T? android,
@@ -68,38 +106,29 @@ T? optionalSelector<T>({
   T? linux,
   T? windows,
 }) {
-  if (Platform.isAndroid) return android;
-  if (Platform.isIOS) return ios;
-  if (Platform.isFuchsia) return fuchsia;
-  if (Platform.isLinux) return linux;
-  if (Platform.isMacOS) return macos;
-  if (Platform.isWindows) return windows;
-  if (kIsWeb) return web;
+  if (_isWeb) {
+    return web;
+  }
 
-  return null;
+  final mapping = <TargetPlatform, T?>{
+    TargetPlatform.android: android,
+    TargetPlatform.iOS: ios,
+    TargetPlatform.fuchsia: fuchsia,
+    TargetPlatform.macOS: macos,
+    TargetPlatform.windows: windows,
+    TargetPlatform.linux: linux,
+  };
+
+  return mapping[_targetPlatform];
 }
 
-/// Selects a value based on the device type (mobile, desktop, web).
-///
-/// All device type parameters are required. Throws [UnsupportedError] if the
-/// device type is not identified.
-///
-/// Example:
-/// ```dart
-/// String deviceType = deviceSelector(
-///       mobile: 'This is a mobile device.',
-///       desktop: 'This is a desktop device.',
-///       web: 'This is a web browser.',
-/// );
-/// print(deviceType); // e.g., "This is a mobile device." on an iOS phone
-/// ```
 T deviceSelector<T>({
   required T mobile,
   required T desktop,
   required T web,
   @visibleForTesting String? debugDeviceType,
 }) {
-  final deviceType = debugDeviceType ?? (isMobile ? 'mobile' : (isDesktop ? 'desktop' : Platform.operatingSystem));
+  final deviceType = _resolveDeviceType(debugDeviceType: debugDeviceType);
 
   switch (deviceType) {
     case 'web':
@@ -113,27 +142,13 @@ T deviceSelector<T>({
   throw UnsupportedError('Unidentified device $deviceType');
 }
 
-/// Optional device selector.
-///
-/// Similar to [deviceSelector], but device type parameters are optional.
-/// Returns `null` if the current device type's value is not provided or if
-/// the device type is unidentified.
-///
-/// Example:
-/// ```dart
-/// String? specificDeviceMessage = optionalDeviceSelector(
-///       mobile: 'Mobile specific UI.',
-///       web: 'Web specific UI.',
-/// );
-/// print(specificDeviceMessage); // "Mobile specific UI." on Android, null on Windows desktop
-/// ```
 T? optionalDeviceSelector<T>({
   T? mobile,
   T? desktop,
   T? web,
   @visibleForTesting String? debugDeviceType,
 }) {
-  final deviceType = debugDeviceType ?? (isMobile ? 'mobile' : (isDesktop ? 'desktop' : Platform.operatingSystem));
+  final deviceType = _resolveDeviceType(debugDeviceType: debugDeviceType);
 
   switch (deviceType) {
     case 'web':
@@ -147,20 +162,6 @@ T? optionalDeviceSelector<T>({
   throw UnsupportedError('Unidentified device $deviceType');
 }
 
-/// Selects a value based on the current platform, with a fallback `orElse` value.
-///
-/// Use this when you want to provide a default fallback value if a specific
-/// platform's value is not defined.
-///
-/// Example:
-/// ```dart
-/// String apiKey = selectOrElse(
-///       android: 'YOUR_ANDROID_API_KEY',
-///       ios: 'YOUR_IOS_API_KEY',
-///       orElse: 'DEFAULT_API_KEY', // Used if platform is not Android or iOS
-/// );
-/// print(apiKey); // "YOUR_ANDROID_API_KEY" on Android, "DEFAULT_API_KEY" on Windows
-/// ```
 T selectOrElse<T>({
   T? web,
   T? android,
@@ -171,101 +172,57 @@ T selectOrElse<T>({
   T? windows,
   required T orElse,
 }) {
-  if (Platform.isAndroid) return android ?? orElse;
-  if (Platform.isIOS) return ios ?? orElse;
-  if (Platform.isFuchsia) return fuchsia ?? orElse;
-  if (Platform.isLinux) return linux ?? orElse;
-  if (Platform.isMacOS) return macos ?? orElse;
-  if (Platform.isWindows) return windows ?? orElse;
-  return orElse;
+  if (_isWeb) {
+    return web ?? orElse;
+  }
+
+  final mapping = <TargetPlatform, T?>{
+    TargetPlatform.android: android,
+    TargetPlatform.iOS: ios,
+    TargetPlatform.fuchsia: fuchsia,
+    TargetPlatform.macOS: macos,
+    TargetPlatform.windows: windows,
+    TargetPlatform.linux: linux,
+  };
+
+  return mapping[_targetPlatform] ?? orElse;
 }
 
-/// Returns `androidValue` if the current platform is Android, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = androidOrElse('android_key', 'default_key');
-/// ```
 T androidOrElse<T>(T androidValue, T elsePlatform) {
   return selectOrElse(android: androidValue, orElse: elsePlatform);
 }
 
-/// Returns `iosValue` if the current platform is iOS, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = iosOrElse('ios_key', 'default_key');
-/// ```
 T iosOrElse<T>(T iosValue, T elsePlatform) {
   return selectOrElse(ios: iosValue, orElse: elsePlatform);
 }
 
-/// Returns `fuchsiaValue` if the current platform is Fuchsia, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = fuchsiaOrElse('fuchsia_key', 'default_key');
-/// ```
 T fuchsiaOrElse<T>(T fuchsiaValue, T elsePlatform) {
   return selectOrElse(fuchsia: fuchsiaValue, orElse: elsePlatform);
 }
 
-/// Returns `linuxValue` if the current platform is Linux, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = linuxOrElse('linux_key', 'default_key');
-/// ```
 T linuxOrElse<T>(T linuxValue, T elsePlatform) {
   return selectOrElse(linux: linuxValue, orElse: elsePlatform);
 }
 
-/// Returns `macosValue` if the current platform is macOS, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = macosOrElse('macos_key', 'default_key');
-/// ```
 T macosOrElse<T>(T macosValue, T elsePlatform) {
   return selectOrElse(macos: macosValue, orElse: elsePlatform);
 }
 
-/// Returns `windowsValue` if the current platform is Windows, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = windowsOrElse('windows_key', 'default_key');
-/// ```
 T windowsOrElse<T>(T windowsValue, T elsePlatform) {
   return selectOrElse(windows: windowsValue, orElse: elsePlatform);
 }
 
-/// Returns `mobileValue` if the current device is mobile, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = mobileOrElse('mobile_key', 'default_key');
-/// ```
 T mobileOrElse<T>(T mobileValue, T elsePlatform) {
-  return deviceSelector(mobile: mobileValue, desktop: elsePlatform, web: elsePlatform);
+  return deviceSelector(
+      mobile: mobileValue, desktop: elsePlatform, web: elsePlatform);
 }
 
-/// Returns `desktopValue` if the current device is desktop, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = desktopOrElse('desktop_key', 'default_key');
-/// ```
 T desktopOrElse<T>(T desktopValue, T elsePlatform) {
-  return deviceSelector(mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
+  return deviceSelector(
+      mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
 }
 
-/// Returns `webValue` if the current device is web, otherwise returns `elsePlatform`.
-///
-/// Example:
-/// ```dart
-/// String key = webOrElse('web_key', 'default_key');
-/// ```
 T webOrElse<T>(T webValue, T elsePlatform) {
-  return deviceSelector(mobile: elsePlatform, desktop: elsePlatform, web: webValue);
+  return deviceSelector(
+      mobile: elsePlatform, desktop: elsePlatform, web: webValue);
 }

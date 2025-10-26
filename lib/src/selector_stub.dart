@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+export 'selector_overrides.dart'
+    show debugTargetPlatformOverride, debugIsWebOverride;
+
 /// isMobile device (stub)
 bool get isMobile => throw UnsupportedError('Unsupported platform');
 
