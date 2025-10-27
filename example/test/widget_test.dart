@@ -13,13 +13,13 @@ import 'package:selector_example/main.dart';
 void main() {
   testWidgets('Verify Platform version', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
 
     // Verify that platform version is retrieved.
     expect(
       find.byWidgetPredicate(
-        (Widget widget) => widget is Text &&
-                           (widget.data as String).startsWith('Running on:'),
+        (Widget widget) =>
+            widget is Text && (widget.data as String).startsWith('Running on:'),
       ),
       findsOneWidget,
     );

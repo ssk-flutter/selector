@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 
+export 'selector_overrides.dart'
+    show debugTargetPlatformOverride, debugIsWebOverride;
+
 /// isMobile device (always false on web)
 bool get isMobile => false;
 
@@ -80,8 +83,7 @@ T deviceSelector<T>({
   required T mobile,
   required T desktop,
   required T web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
   return web;
 }
@@ -104,8 +106,7 @@ T? optionalDeviceSelector<T>({
   T? mobile,
   T? desktop,
   T? web,
-  @visibleForTesting
-  String? debugDeviceType,
+  @visibleForTesting String? debugDeviceType,
 }) {
   return web;
 }
@@ -133,7 +134,6 @@ T selectOrElse<T>({
   T? linux,
   T? windows,
   required T orElse,
-
 }) {
   return web ?? orElse;
 }
@@ -205,7 +205,8 @@ T windowsOrElse<T>(T windowsValue, T elsePlatform) {
 /// String key = mobileOrElse('mobile_key', 'default_key');
 /// ```
 T mobileOrElse<T>(T mobileValue, T elsePlatform) {
-  return deviceSelector(mobile: mobileValue, desktop: elsePlatform, web: elsePlatform);
+  return deviceSelector(
+      mobile: mobileValue, desktop: elsePlatform, web: elsePlatform);
 }
 
 /// Returns `desktopValue` if the current device is desktop, otherwise returns `elsePlatform`.
@@ -215,7 +216,8 @@ T mobileOrElse<T>(T mobileValue, T elsePlatform) {
 /// String key = desktopOrElse('desktop_key', 'default_key');
 /// ```
 T desktopOrElse<T>(T desktopValue, T elsePlatform) {
-  return deviceSelector(mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
+  return deviceSelector(
+      mobile: elsePlatform, desktop: desktopValue, web: elsePlatform);
 }
 
 /// Returns `webValue` if the current device is web, otherwise returns `elsePlatform`.
@@ -225,5 +227,6 @@ T desktopOrElse<T>(T desktopValue, T elsePlatform) {
 /// String key = webOrElse('web_key', 'default_key');
 /// ```
 T webOrElse<T>(T webValue, T elsePlatform) {
-  return deviceSelector(mobile: elsePlatform, desktop: elsePlatform, web: webValue);
+  return deviceSelector(
+      mobile: elsePlatform, desktop: elsePlatform, web: webValue);
 }

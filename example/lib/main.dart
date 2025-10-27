@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:selector/selector.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('platform selector')),
+        appBar: AppBar(title: const Text('platform selector')),
         body: Builder(builder: (context) => _buildBody(context)),
       ),
     );
@@ -20,21 +22,45 @@ class MyApp extends StatelessWidget {
 
   _buildBody(BuildContext context) => Column(
         children: [
-          TextButton(child: Text('selector'), onPressed: () => _showSnackBar(context, _selector())),
-          TextButton(child: Text('deviceSelector'), onPressed: () => _showSnackBar(context, _deviceSelector())),
           TextButton(
-              child: Text('parameter as function'),
-              onPressed: () => _showSnackBar(context, _functionParameter().toString())),
-          TextButton(child: Text('androidOrElse'), onPressed: () => _showSnackBar(context, _androidOrElse())),
-          TextButton(child: Text('iosOrElse()'), onPressed: () => _showSnackBar(context, _iosOrElse())),
-          TextButton(child: Text('mobileOrElse()'), onPressed: () => _showSnackBar(context, _mobileOrElse())),
-          TextButton(child: Text('desktopOrElse()'), onPressed: () => _showSnackBar(context, _desktopOrElse())),
-          TextButton(child: Text('webOrElse()'), onPressed: () => _showSnackBar(context, _webOrElse())),
+            onPressed: () => _showSnackBar(context, _selector()),
+            child: const Text('selector'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _deviceSelector()),
+            child: const Text('deviceSelector'),
+          ),
+          TextButton(
+            onPressed: () =>
+                _showSnackBar(context, _functionParameter().toString()),
+            child: const Text('parameter as function'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _androidOrElse()),
+            child: const Text('androidOrElse'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _iosOrElse()),
+            child: const Text('iosOrElse()'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _mobileOrElse()),
+            child: const Text('mobileOrElse()'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _desktopOrElse()),
+            child: const Text('desktopOrElse()'),
+          ),
+          TextButton(
+            onPressed: () => _showSnackBar(context, _webOrElse()),
+            child: const Text('webOrElse()'),
+          ),
         ],
       );
 
   _showSnackBar(BuildContext context, String message) =>
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   String _selector() => selector<String>(
         android: 'hello Android',
@@ -66,9 +92,11 @@ class MyApp extends StatelessWidget {
 
   _iosOrElse() => iosOrElse<String>('ios-admob-id', 'android-admob-id');
 
-  _mobileOrElse() => mobileOrElse<String>('mobile-admob-id', 'desktop-admob-id');
+  _mobileOrElse() =>
+      mobileOrElse<String>('mobile-admob-id', 'desktop-admob-id');
 
-  _desktopOrElse() => desktopOrElse<String>('desktop-admob-id', 'mobile-admob-id');
+  _desktopOrElse() =>
+      desktopOrElse<String>('desktop-admob-id', 'mobile-admob-id');
 
   _webOrElse() => webOrElse<String>('web-admob-id', 'non-web-admob-id');
 }

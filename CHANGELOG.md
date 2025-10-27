@@ -1,3 +1,7 @@
+## 4.1.0
+* Removed direct `dart:io` `Platform` usage; selector APIs now rely on `TargetPlatform`, avoiding release-runtime crashes on web.
+* Added testing overrides to simulate platform/device combinations in unit tests.
+
 ## 4.0.0-dev.5
 * Reintroduced explicit `webOrElse` function.
 
